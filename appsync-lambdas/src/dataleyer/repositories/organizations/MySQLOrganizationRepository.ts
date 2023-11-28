@@ -26,6 +26,7 @@ export class MySQLOrganizationRepository {
   async getSOIDByIntegrationID(integrationID: string) {
     await this.connect();
 
+    // TODO: test what will be in the rows after I'll be able to run lambda
     const [rows, fields] = await this.connection.execute(`
       SELECT Organizations.SOID
       FROM Teams
