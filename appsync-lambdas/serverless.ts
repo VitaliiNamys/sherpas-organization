@@ -17,6 +17,7 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       ORGANIZATIONS_DB_NAME: 'organizations',
+      ORGANIZATIONS_USER_NAME: 'organizationsapp',
       ORGANIZATIONS_PROXY_ENDPOINT: 'org-db-proxy.proxy-cxzpplvqefyn.us-east-1.rds.amazonaws.com',
     },
   },

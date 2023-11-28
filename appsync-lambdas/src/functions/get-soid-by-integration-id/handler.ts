@@ -8,18 +8,14 @@ import { pino } from 'pino';
 import { MySQLOrganizationRepository } from '../../dataleyer/repositories/organizations';
 
 const GetSOIDbyIntegrationID = async (event, context: Context) => {
-  const { IntegrationId } = event;
+  const { IntegrationID } = event;
+
   const mysqRepository = new MySQLOrganizationRepository();
-  const SOID = await mysqRepository.getSOIDByIntegrationID(IntegrationId);
+  const SOID = await mysqRepository.getSOIDByIntegrationID(IntegrationID);
   
   context.metrics.setProperty('RequestId', context.awsRequestId);
 
-  return {
-    statusCode: 200,
-    body: {
-      SOID,
-    }
-  };
+  return SOID;
 };
 
 const logger = pino();

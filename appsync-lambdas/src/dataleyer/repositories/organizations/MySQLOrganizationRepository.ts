@@ -10,7 +10,7 @@ export class MySQLOrganizationRepository {
     this.context = context<{ logger }>();
     this.db = new MySQLClient({
       host: process.env.ORGANIZATIONS_PROXY_ENDPOINT,
-      user: 'admin',
+      user: process.env.ORGANIZATIONS_USER_NAME,
       database: process.env.ORGANIZATIONS_DB_NAME,
       port: 3306,
       region: 'us-east-1',
