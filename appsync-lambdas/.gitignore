@@ -9,3 +9,5 @@ jspm_packages
 .esbuild
 
 .DS_Store
+
+src/us-east-1-bundle.pem

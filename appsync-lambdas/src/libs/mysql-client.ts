@@ -22,35 +22,30 @@ export class MySQLClient {
 
   async connect() {
     const { host, user, database, port, region } = this.connectionParams;
-    const ca = 'src/functions/get-soid-by-webhook-id/us-east-1-bundle.pem';
+    const ca = 'src/us-east-1-bundle.pem';
 
-    try {
-      this.signer = new Signer({
-        hostname: host,
-        port,
-        username: user,
-        region: region,
-      });
+    this.signer = new Signer({
+      hostname: host,
+      port,
+      username: user,
+      region: region,
+    });
 
-      await access(ca);
+    await access(ca);
 
-      this.db = await createConnection({
-        host,
-        user,
-        database,
-        authPlugins: { 
-          mysql_clear_password: () => () => this.signer.getAuthToken() 
-        },
-        ssl: {
-          rejectUnauthorized: false,
-          ca: [await readFile(resolve(ca), 'utf-8')],
-        }
-      });
+    this.db = await createConnection({
+      host,
+      user,
+      database,
+      authPlugins: {
+        mysql_clear_password: () => () => this.signer.getAuthToken()
+      },
+      ssl: {
+        rejectUnauthorized: false,
+        ca: [await readFile(resolve(ca), 'utf-8')],
+      }
+    });
 
-      return this.db;
-    } catch(error) {
-      console.error(error);
-      // Log
-    }
+    return this.db;
   }
 }

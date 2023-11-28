@@ -16,9 +16,8 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-      ORGANIZATION_INTEGRATION_TABLE: '',
-      ORGANIZATIONS_DB_NAME: 'mysql',
-      ORGANIZATIONS_PROXY_ENDPOINT: 'org-db-proxy.proxy-ck1dlrxuclxe.us-east-1.rds.amazonaws.com',
+      ORGANIZATIONS_DB_NAME: 'organizations',
+      ORGANIZATIONS_PROXY_ENDPOINT: 'org-db-proxy.proxy-cxzpplvqefyn.us-east-1.rds.amazonaws.com',
     },
   },
   // import the function via paths
@@ -28,10 +27,13 @@ const serverlessConfiguration: AWS = {
   package: { 
     individually: true,
     include: [
-      'src/functions/get-soid-by-integration-id/us-east-1-bundle.pem',
+      'src/us-east-1-bundle.pem',
     ],
   },
   custom: {
+    patterns: [
+      'src/us-east-1-bundle.pem',
+    ],
     scripts: {
       hooks: {
         'deploy:finalize': './load-ca.sh',
