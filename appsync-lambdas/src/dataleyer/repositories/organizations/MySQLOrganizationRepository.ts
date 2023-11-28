@@ -25,12 +25,16 @@ export class MySQLOrganizationRepository {
 
   async getSOIDByIntegrationID(integrationID: string) {
     await this.connect();
+    
     const [rows, fields] = await this.connection.execute(`
       SELECT Organizations.SOID
       FROM Teams
       JOIN Organizations ON Teams.SOID = Organizations.SOID
       WHERE Teams.IntegrationID = ${integrationID}
     `);
+
+    console.log(rows);
+
     this.connection.end();
   }
 }

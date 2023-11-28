@@ -5,15 +5,13 @@ import errorLogger from '@middy/error-logger';
 import { invocationMiddleware } from '../../libs/invocation';
 import { pino } from 'pino';
 
-import { MySQLOrganizationRepository, DDBOrganizationRepository } from '../../dataleyer/repositories/organizations';
+import { MySQLOrganizationRepository } from '../../dataleyer/repositories/organizations';
 
-const GetSOIDbyWebhookIDandProviderType = async (event, context: Context) => {
-  const { WebhookID, ProviderType } = event;
+const GetSOIDbyIntegrationID = async (event, context: Context) => {
+  const { IntegrationId } = event;
   const mysqRepository = new MySQLOrganizationRepository();
-  const ddbRepository = new DDBOrganizationRepository();
   
-  const integrationId = await ddbRepository.getIntegrationIDByWebhookIDandProviderType(WebhookID, ProviderType);
-  const SOID = await mysqRepository.getSOIDByIntegrationID(integrationId);
+  const SOID = await mysqRepository.getSOIDByIntegrationID(IntegrationId);
 
   context.metrics.setProperty('RequestId', context.awsRequestId);
 
@@ -33,8 +31,8 @@ export const main = middy()
   .use(
     cloudwatchMetrics({
       namespace: process.env.LAMBDA_NAME,
-      dimensions: [{ Action: 'GetSOIDByWebhookID' }],
+      dimensions: [{ Action: 'GetSOIDbyIntegrationID' }],
     }),
   )
   .use(invocationMiddleware({ logger }))
-  .handler(GetSOIDbyWebhookIDandProviderType);
+  .handler(GetSOIDbyIntegrationID);

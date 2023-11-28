@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import GetSOIDbyWebhookID from '@functions/get-soid-by-webhook-id';
+import GetSOIDbyIntegrationID from '@functions/get-soid-by-integration-id';
 
 const serverlessConfiguration: AWS = {
   service: 'sherpas-organizations',
@@ -23,12 +23,12 @@ const serverlessConfiguration: AWS = {
   },
   // import the function via paths
   functions: { 
-    ['testRds']: GetSOIDbyWebhookID,
+    ['get-soid-by-integration-id']: GetSOIDbyIntegrationID,
   },
   package: { 
     individually: true,
     include: [
-      'src/functions/get-soid-by-webhook-id/us-east-1-bundle.pem',
+      'src/functions/get-soid-by-integration-id/us-east-1-bundle.pem',
     ],
   },
   custom: {
