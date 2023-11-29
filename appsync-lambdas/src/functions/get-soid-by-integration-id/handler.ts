@@ -9,10 +9,9 @@ import { MySQLOrganizationRepository } from '../../dataleyer/repositories/organi
 
 const GetSOIDbyIntegrationID = async (event, context: Context) => {
   const { IntegrationID } = event;
-
   const mysqRepository = new MySQLOrganizationRepository();
-  const SOID = await mysqRepository.getSOIDByIntegrationID(IntegrationID);
   
+  const SOID = await mysqRepository.getSOIDByIntegrationID(IntegrationID);
   context.metrics.setProperty('RequestId', context.awsRequestId);
 
   return SOID;
