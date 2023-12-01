@@ -1,14 +1,14 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import GetSOIDbyIntegrationID from '@functions/get-soid-by-integration-id';
 
 const serverlessConfiguration: AWS = {
   service: 'sherpas-organizations',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-plugin-scripts'],
   provider: {
     name: 'aws',
-    runtime: 'nodejs14.x',
+    runtime: 'nodejs16.x',
     apiGateway: {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
@@ -16,18 +16,37 @@ const serverlessConfiguration: AWS = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      ORGANIZATIONS_DB_NAME: 'organizations',
+      ORGANIZATIONS_USER_NAME: 'admin',
+      ORGANIZATIONS_PROXY_ENDPOINT: 'org-test-rds-proxy.proxy-cxzpplvqefyn.us-east-1.rds.amazonaws.com',
+      ORGANIZATIONS_REGION: 'us-east-1',
     },
   },
   // import the function via paths
-  functions: { hello },
-  package: { individually: true },
+  functions: { 
+    ['get-soid-by-integration-id']: GetSOIDbyIntegrationID,
+  },
+  package: { 
+    individually: true,
+    include: [
+      'src/us-east-1-bundle.pem',
+    ],
+  },
   custom: {
+    patterns: [
+      'src/us-east-1-bundle.pem',
+    ],
+    scripts: {
+      hooks: {
+        'deploy:finalize': './load-ca.sh',
+      }
+    },
     esbuild: {
       bundle: true,
       minify: false,
       sourcemap: true,
       exclude: ['aws-sdk'],
-      target: 'node14',
+      target: 'node16',
       define: { 'require.resolve': undefined },
       platform: 'node',
       concurrency: 10,
