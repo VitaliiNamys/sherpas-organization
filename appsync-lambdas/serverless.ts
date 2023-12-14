@@ -5,7 +5,7 @@ import GetSOIDbyIntegrationID from '@functions/get-soid-by-integration-id';
 const serverlessConfiguration: AWS = {
   service: 'sherpas-organizations',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-plugin-scripts'],
+  plugins: ['serverless-esbuild', 'serverless-plugin-scripts', 'serverless-plugin-diff'],
   provider: {
     name: 'aws',
     runtime: 'nodejs16.x',
@@ -22,11 +22,10 @@ const serverlessConfiguration: AWS = {
       ORGANIZATIONS_REGION: 'us-east-1',
     },
   },
-  // import the function via paths
-  functions: { 
+  functions: {
     ['get-soid-by-integration-id']: GetSOIDbyIntegrationID,
   },
-  package: { 
+  package: {
     individually: true,
     include: [
       'src/us-east-1-bundle.pem',

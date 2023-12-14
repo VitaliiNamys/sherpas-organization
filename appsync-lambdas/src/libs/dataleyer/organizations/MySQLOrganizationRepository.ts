@@ -1,8 +1,8 @@
-import { context, InvocationContext } from '../../../libs/invocation';
-import { MySQLClient } from '../../../libs/mysql-client';
+import { context, InvocationContext } from '../../middleware/invocation';
+import { MySQLClient } from '../../clients/mysql-client';
 
 export class MySQLOrganizationRepository {
-  private context: InvocationContext<{ logger }>;
+  private context: InvocationContext;
   private db;
   private connection = undefined;
 
