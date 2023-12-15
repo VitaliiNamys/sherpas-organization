@@ -1,6 +1,7 @@
 import type { AWS } from '@serverless/typescript';
 
 import GetSOIDbyIntegrationID from '@functions/get-soid-by-integration-id';
+import GetOrganizationByIntegrationID from '@functions/get-organization-by-integration-id'
 
 const serverlessConfiguration: AWS = {
   service: 'sherpas-organizations',
@@ -24,6 +25,7 @@ const serverlessConfiguration: AWS = {
   },
   functions: {
     ['get-soid-by-integration-id']: GetSOIDbyIntegrationID,
+    ['get-organization-by-integration-id']: GetOrganizationByIntegrationID,
   },
   package: {
     individually: true,
