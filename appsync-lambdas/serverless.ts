@@ -37,7 +37,7 @@ const serverlessConfiguration: AWS = {
     ],
     scripts: {
       hooks: {
-        'deploy:finalize': './load-ca.sh',
+        'before:deploy:deploy': './load-ca.sh',
       }
     },
     esbuild: {
