@@ -1,66 +1,8 @@
 import { context, InvocationContext } from '../../middleware/invocation';
 import { MySQLClient } from '../../clients/mysql-client';
+import { IOrganizationRepository } from './types';
 
-const Organizations = [
-  {
-    SOID: '1',
-    Name: 'Organization A',
-    Created: '',
-    Updated: '',
-    Status: 'Active',
-  },
-  {
-    SOID: '2',
-    Name: 'Organization B',
-    Created: '',
-    Updated: '',
-    Status: 'Pending',
-  },
-  {
-    SOID: '3',
-    Name: 'Organization C',
-    Created: '',
-    Updated: '',
-    Status: 'Active',
-  },
-];
-
-const Teams = [
-  {
-    STID: '101',
-    SOID: '1',
-    IntegrationID: 'IntegrationID_101',
-    Name: 'Team X',
-    Created: '',
-    Updated: '',
-    Status: 'Active',
-  },
-  {
-    STID: '102',
-    SOID: '2',
-    IntegrationID: 'IntegrationID_102',
-    Name: 'Team Y',
-    Created: '',
-    Updated: '',
-    Status: 'Pending',
-  },
-  {
-    STID: '103',
-    SOID: '3',
-    IntegrationID: 'IntegrationID_103',
-    Name: 'Team Z',
-    Created: '',
-    Updated: '',
-    Status: 'Active',
-  },
-];
-
-const DB = {
-  Organizations,
-  Teams,
-};
-
-export class MySQLOrganizationRepository {
+export class MySQLOrganizationRepository implements IOrganizationRepository {
   private context: InvocationContext;
   private db;
   private connection = undefined;
@@ -82,40 +24,33 @@ export class MySQLOrganizationRepository {
     }
   }
 
+  // TODO: {VitaliiNamys} Double check DB query once issue with DB connection will be fixed
   async getOrganizationByIntegrationID(integrationID: string) {
-   const team = DB.Teams.find((t) => t.IntegrationID === integrationID);
+    try {
+      await this.connect();
 
-   if (!team) {
-    return null;
-   }
+      const [rows] = await this.connection.execute(`
+        SELECT *
+        FROM Organizations o
+        INNER JOIN Teams t ON o.SOID = t.SOID
+        WHERE t.IntegrationID = "${integrationID}"
+      `);
 
-   const organization = DB.Organizations.find((o) => o.SOID === team.SOID);
+      this.connection.end();
 
-   return organization ?? null;
+      if (rows.length > 0) {
+        return rows[0];
+      } else {
+        this.context.logger.error(`There is no Organization by ${integrationID}`);
+
+        return null;
+      }
+    } catch (error) {
+      this.context.logger.error(`Failed to query Organization by ${integrationID}. Error: ${error}`);
+
+      throw error;
+    }
+
+
   }
-
-  async getSOIDByIntegrationID(integrationID: string) {
-   const team = DB.Teams.find((t) => t.IntegrationID === integrationID);
-
-   return team?.SOID ?? null;
-  }
-
-  // async getSOIDByIntegrationID(integrationID: string) {
-  //   await this.connect();
-
-  //   const [rows] = await this.connection.execute(`
-  //     SELECT Organizations.SOID
-  //     FROM Teams
-  //     JOIN Organizations ON Teams.SOID = Organizations.SOID
-  //     WHERE Teams.IntegrationID = "${integrationID}"
-  //   `);
-
-  //   this.connection.end();
-
-  //   if (rows.length > 0) {
-  //     return rows[0].SOID;
-  //   } else {
-  //     this.context.logger.error(`Failed to get SOID by ${integrationID}`);
-  //   }
-  // }
 }

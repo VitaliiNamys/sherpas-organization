@@ -1,10 +1,9 @@
 import middy from '@middy/core';
 import eventNormalizer from '@middy/event-normalizer';
 import errorLogger from '@middy/error-logger';
-import { invocationMiddleware } from '../../libs/middleware/invocation';
 import { pino } from 'pino';
-
-import { MySQLOrganizationRepository } from '../../libs/dataleyer/organizations';
+import { MySQLOrganizationRepositoryMock } from '@libs/dataleyer/organizations/MySQLOrganizationRepositoryMock';
+import { invocationMiddleware } from '@libs/middleware/invocation';
 
 const logger = pino({
   base: undefined,
@@ -18,7 +17,7 @@ const logger = pino({
 
 const GetSOIDbyIntegrationID = async (event) => {
   const { IntegrationID } = event;
-  const mysqRepository = new MySQLOrganizationRepository();
+  const mysqRepository = new MySQLOrganizationRepositoryMock();
 
   const SOID = await mysqRepository.getSOIDByIntegrationID(IntegrationID);
 
