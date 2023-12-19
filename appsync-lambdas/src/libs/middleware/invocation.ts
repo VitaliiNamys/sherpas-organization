@@ -1,12 +1,13 @@
 import type { KinesisStreamEvent, ALBEvent } from 'aws-lambda';
-import type { Context } from '@middy/cloudwatch-metrics';
 
 export type Event = KinesisStreamEvent | ALBEvent;
-export type InvocationContext<T> = Context & T;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type InvocationContext = any;
 
 export type Request = {
   event: Event; // TODO: Add other event
-  context: Context;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any;
 };
 
 let evt, ctx;
@@ -15,7 +16,8 @@ export const event = (): Event => {
   return evt;
 };
 
-export const context = <T>(): Context & T => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const context = <T>(): any & T => {
   return ctx;
 };
 

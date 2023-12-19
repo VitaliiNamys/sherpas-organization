@@ -8,6 +8,9 @@ jspm_packages
 # esbuild directories
 .esbuild
 
+# coverage
+coverage
+
 .DS_Store
 
 src/us-east-1-bundle.pem
