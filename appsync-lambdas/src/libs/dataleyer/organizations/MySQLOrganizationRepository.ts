@@ -24,16 +24,15 @@ export class MySQLOrganizationRepository implements IOrganizationRepository {
     }
   }
 
-  // TODO: {VitaliiNamys} Double check DB query once issue with DB connection will be fixed
   async getOrganizationByIntegrationID(integrationID: string) {
     try {
       await this.connect();
 
       const [rows] = await this.connection.execute(`
         SELECT *
-        FROM Organizations o
-        INNER JOIN Teams t ON o.SOID = t.SOID
-        WHERE t.IntegrationID = "${integrationID}"
+        FROM Teams
+        JOIN Organizations ON Teams.SOID = Organizations.SOID
+        WHERE Teams.IntegrationID = "${integrationID}"
       `);
 
       this.connection.end();
