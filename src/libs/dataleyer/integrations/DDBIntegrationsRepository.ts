@@ -1,6 +1,6 @@
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb';
 import { context, InvocationContext } from '../../middleware/invocation';
-import { DynamoDBClient } from '@libs/client/dynamodb-client';
+import { DynamoDBClient } from '../../clients';
 import type { IIntegrationsRepository } from './types';
 
 export class DDBIntegrationRepository implements IIntegrationsRepository {
