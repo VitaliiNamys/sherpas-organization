@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/name/xyz.git"
+  },
   "scripts": {
     "deploy": "sls deploy --aws-profile sherpasdev-sandbox -s prod",
     "diff": "sls diff --aws-profile sherpasdev-sandbox -s prod",

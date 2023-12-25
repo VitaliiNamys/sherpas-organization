@@ -1,1 +1,14 @@
-.DB_Store
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# esbuild directories
+.esbuild
+
+# coverage
+coverage
+
+yarn-error.log
