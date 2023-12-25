@@ -18,7 +18,6 @@ export class AppSyncClient {
     this.coreClient = new AppSyncClientCore({
       region,
     });
-
     this.client = new AppsyncClient({
       apiUrl,
     });
