@@ -2,7 +2,7 @@
   "name": "sherpas-organizations",
   "version": "1.0.0",
   "description": "Serverless aws-nodejs-typescript template",
-  "main": "serverless.ts",
+  "main": "src/index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/name/xyz.git"
@@ -18,12 +18,16 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.458.0",
+    "@aws-sdk/client-appsync": "^3.478.0",
+    "@aws-sdk/client-dynamodb": "^3.478.0",
     "@aws-sdk/rds-signer": "^3.454.0",
+    "@aws-sdk/util-dynamodb": "^3.478.0",
     "@middy/core": "^5.0.3",
     "@middy/error-logger": "^5.0.3",
     "@middy/event-normalizer": "^5.0.3",
     "@middy/http-json-body-parser": "^3.4.0",
+    "appsync-client": "^2.16.0",
+    "graphql-tag": "^2.12.6",
     "mysql2": "^3.6.5",
     "pino": "^8.16.2",
     "serverless-plugin-diff": "^3.0.0",
