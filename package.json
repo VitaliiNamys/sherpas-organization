@@ -4,10 +4,10 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "src/index.ts",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/vitaliinamys"
+    "registry": "https://npm.pkg.github.com/VitaliiNamys"
   },
   "repository": {
-    "url": "git+ssh://git@github.com/vitaliinamys/sherpas-organization.git"
+    "url": "git+ssh://git@github.com/VitaliiNamys/sherpas-organization.git"
   },
   "scripts": {
     "deploy": "sls deploy --aws-profile sherpasdev-sandbox -s prod",
