@@ -1,0 +1,12 @@
+{
+  "name": "@VitaliiNamys/sherpas-organizations",
+  "version": "1.0.0",
+  "description": "Serverless aws-nodejs-typescript template",
+  "main": "index.ts",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/VitaliiNamys"
+  },
+  "repository": {
+    "url": "git+ssh://git@github.com/VitaliiNamys/sherpas-organization.git"
+  }
+}
