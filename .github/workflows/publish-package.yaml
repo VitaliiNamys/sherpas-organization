@@ -46,4 +46,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           registry: "https://npm.pkg.github.com/VitaliiNamys"
-          access: "restricted"
+          # access: "restricted"
